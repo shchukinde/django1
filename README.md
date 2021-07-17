@@ -1,2 +1,2 @@
 # django1
-gb learnin
+gb learning
