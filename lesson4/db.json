@@ -1,0 +1,19 @@
+  {
+      "category": 1,
+      "name": "Диван семейный",
+      "short_desc": "Диван для всей семьи",
+      "image": "products_images/product-3-sm.jpg",
+      "description": "Большой,  удобный, мягкий, как руки матери!",
+      "price": "20000.00",
+      "quantity": 3
+  },
+  {
+      "category": 2,
+      "name": "детская кровать",
+      "short_desc": "",
+      "image": "products_images/product-1-lg.jpg",
+      "description": "",
+      "price": "10500.00",
+      "quantity": 5
+  }
+]
