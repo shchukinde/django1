@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, User
 from django import forms
 from .models import ShopUser
 
+
 class ShopUserLoginForm(AuthenticationForm):
     class Meta:
         model = ShopUser
@@ -22,24 +23,37 @@ class ShopUserRegisterForm(UserCreationForm):
             for field_name, field in self.fields.items():
                 field.widget.attrs['class'] = 'form-control'
 
-        def clean_age(self):
-            data = self.cleaned_data['age']
-            if data < 18:
-                raise forms.ValidationError('Вы слишком молоды')
-            return data
+    def clean_age(self):
+        data = self.cleaned_data['age']
+        if data < 18:
+            raise forms.ValidationError('Вы слишком молоды')
+        return data
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if data.find("crimea.ru") != -1:
+            raise forms.ValidationError('Мы не регистрируем пользователей из Крыма')
+        return data
 
 class ShopUserEditForm(UserChangeForm):
     class Meta:
         model = ShopUser
-        fields = ('username', 'first_name','password', 'email', 'age', 'avatar')
+        fields = ('username', 'first_name', 'email', 'age', 'avatar', 'password')
 
-        def __init__(self, *args, **kwargs):
-            super(ShopUserEditForm, self).__init__(*args, **kwargs)
-            for field_name, field in self.fields.items():
-                field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs):
+        super(ShopUserEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
-        def clean_age(self):
-            data = self.cleaned_data['age']
-            if data < 18:
-                raise forms.ValidationError('Вы слишком молоды')
-            return data
+    def clean_age(self):
+        data = self.cleaned_data['age']
+
+        if data < 18:
+            raise forms.ValidationError('Вы слишком молоды')
+        return data
+    
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if data.find("crimea.ru") != -1:
+            raise forms.ValidationError('Мы не регистрируем пользователей из Крыма')
+        return data
